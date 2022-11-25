@@ -1,26 +1,19 @@
-package me.whiteship.refactoring._03_long_function._12_split_loop;
+package me.whiteship.refactoring._03_long_function._13_replace_conditional_with_polymorphism;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Comparator;
 import java.util.List;
 
-public class StudyPrinter {
-
-    protected int totalNumberOfEvents;
-
-    protected List<Participant> participants;
-
-    public StudyPrinter(int totalNumberOfEvents, List<Participant> participants) {
-        this.totalNumberOfEvents = totalNumberOfEvents;
-        this.participants = participants;
+public class MarkdownPrinter extends StudyPrinter {
+    public MarkdownPrinter(int totalNumberOfEvents, List<Participant> participants) {
+        super(totalNumberOfEvents, participants);
     }
 
+    @Override
     public void execute() throws IOException {
         try (FileWriter fileWriter = new FileWriter("participants.md");
              PrintWriter writer = new PrintWriter(fileWriter)) {
-            this.participants.sort(Comparator.comparing(Participant::username));
 
             writer.print(header(this.participants.size()));
 
@@ -32,7 +25,7 @@ public class StudyPrinter {
     }
 
     private String getMarkdownForParticipant(Participant p) {
-        return String.format("| %s %s | %.2f%% |\n", p.username(), checkMark(p, this.totalNumberOfEvents),
+        return String.format("| %s %s | %.2f%% |\n", p.username(), checkMark(p),
                 p.getRate(this.totalNumberOfEvents));
     }
 
@@ -52,20 +45,5 @@ public class StudyPrinter {
         header.append("|\n");
 
         return header.toString();
-    }
-
-    /**
-     * |:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|
-     */
-    private String checkMark(Participant p, int totalEvents) {
-        StringBuilder line = new StringBuilder();
-        for (int i = 1 ; i <= totalEvents ; i++) {
-            if(p.homework().containsKey(i) && p.homework().get(i)) {
-                line.append("|:white_check_mark:");
-            } else {
-                line.append("|:x:");
-            }
-        }
-        return line.toString();
     }
 }

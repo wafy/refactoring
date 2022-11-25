@@ -1,4 +1,4 @@
-package me.whiteship.refactoring._03_long_function._12_split_loop;
+package me.whiteship.refactoring._03_long_function._10_replace_function_with_command;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,9 +8,8 @@ import java.util.List;
 
 public class StudyPrinter {
 
-    protected int totalNumberOfEvents;
-
-    protected List<Participant> participants;
+    private int totalNumberOfEvents;
+    private List<Participant> participants;
 
     public StudyPrinter(int totalNumberOfEvents, List<Participant> participants) {
         this.totalNumberOfEvents = totalNumberOfEvents;
@@ -54,6 +53,7 @@ public class StudyPrinter {
         return header.toString();
     }
 
+
     /**
      * |:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:|
      */
@@ -68,4 +68,5 @@ public class StudyPrinter {
         }
         return line.toString();
     }
+
 }
